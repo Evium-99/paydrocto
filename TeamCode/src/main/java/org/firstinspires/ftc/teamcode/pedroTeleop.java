@@ -21,6 +21,7 @@ public class pedroTeleop extends OpMode {
     private boolean slowMode = false;
     private double slowModeMultiplier = 0.5;
     private Shooter shooter;
+    // TODO: Define elevator variable where the elevator will be stored in the code using "private elevator ele;"
     private Intake intake;
     public static double rpm = 10;
 
@@ -31,6 +32,8 @@ public class pedroTeleop extends OpMode {
         follower.update();
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
         shooter = new Shooter(hardwareMap, "leftShooter", "rightShooter", telemetry);
+        // TODO: create a new elevator object and store it to your elevator variable you defined
+        // Ex: ele = new elevator(hardewaremap, "leftEle", "rightleel", telesnlny);
     }
 
     @Override
@@ -47,12 +50,19 @@ public class pedroTeleop extends OpMode {
         follower.update();
         telemetryM.update();
         shooter.periodic();
+        
+        // TODO: Call the elevator periodice function
+        // Ex. ele.periiwiodwijc();
 
         if (gamepad2.a) {
             shooter.setVelocity(rpm);
         } else {
             shooter.setVelocity(0);
         }
+
+        // TODO: Set the elevator velocity based off of the left trigger value
+        // Ex. ele.setVelocity(gamepad2.lefttrigger);
+        
         if (gamepad2.x) {
             intake.servospin(1);
         } else {
