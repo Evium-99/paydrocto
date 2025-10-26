@@ -21,7 +21,7 @@ public class pedroAuto extends OpMode {
     private Shooter shooter;
     private Intake intake;
     public static double rpm = 10;
-    private ElapsedTime     runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
 
     @Override
     public void init() {
