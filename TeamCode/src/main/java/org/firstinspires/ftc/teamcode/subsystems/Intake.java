@@ -1,24 +1,23 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.hardware.motors.CRServo;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Intake extends SubsystemBase {
-    private CRServo lpull;
-    private CRServo  rpull;
+    private Motor lpull;
+    private Motor  rpull;
     private double lp;
     private double rp;
+    private boolean workin;
 
     /**
      * Creates a new pull.
      */
     public Intake(HardwareMap hardwareMap, String lsn, String rsn, Telemetry telemetry) {
-        this.lpull = new CRServo(hardwareMap, lsn);
-        this.rpull = new CRServo(hardwareMap, rsn);
-        this.lp = 0;
-        this.rp = 0;
+        this.lpull = new Motor(hardwareMap, lsn);
+        this.rpull = new Motor(hardwareMap, rsn);
     }
     public void servospin(double yer) {
         this.lp = yer;
@@ -27,7 +26,7 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        lpull.set(lp);
+        lpull.set(-lp);
         rpull.set(rp);
     }
 }
