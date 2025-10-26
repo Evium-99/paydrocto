@@ -31,6 +31,6 @@ public class elevator extends SubsystemBase {
     public void periodic() {
         left.set(-rpmTarget);
         right.set(-rpmTarget);
-        telemetry.addData("ElevatorCPR", leftShooter.getCorrectedVelocity());
+        telemetry.addData("ElevatorCPR", left.getCorrectedVelocity());
     }
 }
