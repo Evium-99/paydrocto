@@ -47,14 +47,19 @@ public class pedroTeleop extends OpMode {
         follower.update();
         telemetryM.update();
         shooter.periodic();
+        intake.periodic();
 
-        if (gamepad2.a) {
+        if (gamepad2.right_stick_y>.1) {
             shooter.setVelocity(rpm);
+        } else if (gamepad2.right_stick_y<-.1) {
+            shooter.setVelocity(-rpm);
         } else {
             shooter.setVelocity(0);
         }
-        if (gamepad2.x) {
+        if (gamepad2.left_stick_y>.1) {
             intake.servospin(1);
+        } else if (gamepad2.left_stick_y<-.1) {
+            intake.servospin(-1);
         } else {
             intake.servospin(0);
         }
