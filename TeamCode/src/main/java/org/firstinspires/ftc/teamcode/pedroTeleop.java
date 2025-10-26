@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 
 @Configurable
 @TeleOp
@@ -17,10 +18,11 @@ public class pedroTeleop extends OpMode {
     private Follower follower;
     public static Pose startingPose; //See ExampleAuto to understand how to use this
     private TelemetryManager telemetryM;
+    private boolean slowMode = false;
+    private double slowModeMultiplier = 0.5;
     private Shooter shooter;
     private Intake intake;
     public static double rpm = 10;
-    public double slowModeMultiplier = .25;
 
     @Override
     public void init() {
@@ -29,7 +31,6 @@ public class pedroTeleop extends OpMode {
         follower.update();
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
         shooter = new Shooter(hardwareMap, "leftShooter", "rightShooter", telemetry);
-        intake = new Intake(hardwareMap, "lpull", "rpull", telemetry);
     }
 
     @Override
@@ -46,69 +47,49 @@ public class pedroTeleop extends OpMode {
         follower.update();
         telemetryM.update();
         shooter.periodic();
-        intake.periodic();
 
-        //Gamepad 2 controls:
-        if (gamepad2.right_trigger > 0.05) {
-            while (gamepad2.right_trigger > 0.05) {
-                shooter.setVelocity(rpm);
-                intake.servospin(1);
-            }
-            shooter.setVelocity(0);
-            intake.servospin(0);
-        }
-        else if (gamepad2.left_trigger > 0.05) {
-            while (gamepad2.left_trigger > 0.05) {
-                intake.servospin(-1);
-            }
-            intake.servospin(0);
-        }
-        else if (gamepad2.a) {
-            while (gamepad2.a) {
-                shooter.setVelocity(-rpm / 4);
-                intake.servospin(1);
-            }
-            shooter.setVelocity(0);
-            intake.servospin(0);
-        }
-        if (gamepad2.left_stick_y < -0.1) {
-            while (gamepad2.left_stick_y < -0.1) {
-                intake.servospin(-1);
-            }
-            intake.servospin(0);
-        }
-        if (gamepad2.left_stick_y > 0.1) {
-            while (gamepad2.left_stick_y > 0.1) {
-                intake.servospin(1);
-            }
-            intake.servospin(0);
-        }
-        if (gamepad2.right_stick_y < -0.1) {
-            while (gamepad2.right_stick_y < -0.1) {
-                shooter.setVelocity(-rpm);
-            }
+        if (gamepad2.a) {
+            shooter.setVelocity(rpm);
+        } else {
             shooter.setVelocity(0);
         }
-        if (gamepad2.right_stick_y > 0.1) {
-            while (gamepad2.right_stick_y > 0.1) {
-                shooter.setVelocity(rpm);
-            }
-            shooter.setVelocity(0);
+        if (gamepad2.x) {
+            intake.servospin(1);
+        } else {
+            intake.servospin(0);
         }
 
 
-        //Gamepad 1 controls
-        if (gamepad1.right_trigger > 0.05) follower.setTeleOpDrive(
-                -gamepad1.left_stick_y * slowModeMultiplier,
-                -gamepad1.left_stick_x * slowModeMultiplier,
-                -gamepad1.right_stick_x * slowModeMultiplier,
-                true // Robot Centric
-        );
-        else follower.setTeleOpDrive(
+
+        if (!slowMode) follower.setTeleOpDrive(
                 -gamepad1.left_stick_y,
                 -gamepad1.left_stick_x,
                 -gamepad1.right_stick_x,
                 true // Robot Centric
         );
+
+            //This is how it looks with slowMode on
+        else follower.setTeleOpDrive(
+                -gamepad1.left_stick_y * slowModeMultiplier,
+                -gamepad1.left_stick_x * slowModeMultiplier,
+                -gamepad1.right_stick_x * slowModeMultiplier,
+                true // Robot Centric
+        );
+
+        //Slow Mode
+        if (gamepad1.rightBumperWasPressed()) {
+            slowMode = !slowMode;
+        }
+
+        //Optional way to change slow mode strength
+        if (gamepad1.xWasPressed()) {
+            slowModeMultiplier += 0.25;
+        }
+
+        //Optional way to change slow mode strength
+        if (gamepad2.yWasPressed()) {
+            slowModeMultiplier -= 0.25;
+        }
+
     }
 }
