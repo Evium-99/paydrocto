@@ -31,6 +31,7 @@ public class pedroTeleop extends OpMode {
         follower.update();
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
         shooter = new Shooter(hardwareMap, "leftShooter", "rightShooter", telemetry);
+        intake = new Intake(hardwareMap, "name", "name", telemetry);
     }
 
     @Override
