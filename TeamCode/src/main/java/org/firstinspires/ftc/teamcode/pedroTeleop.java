@@ -20,6 +20,7 @@ public class pedroTeleop extends OpMode {
     private Shooter shooter;
     private Intake intake;
     public static double rpm = 10;
+    public double slowModeMultiplier = .25;
 
     @Override
     public void init() {
@@ -97,7 +98,6 @@ public class pedroTeleop extends OpMode {
 
 
         //Gamepad 1 controls
-        double slowModeMultiplier = 0.25;
         if (gamepad1.right_trigger > 0.05) follower.setTeleOpDrive(
                 -gamepad1.left_stick_y * slowModeMultiplier,
                 -gamepad1.left_stick_x * slowModeMultiplier,
