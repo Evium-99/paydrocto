@@ -51,7 +51,7 @@ public class pedroAuto extends OpMode {
         intake.periodic();
 
 
-        while ((runtime.seconds() >= 3.0 && runtime.seconds() < 4.0)) {
+        if ((runtime.seconds() >= 3.0 && runtime.seconds() < 4.0)) {
             follower.setTeleOpDrive(
                     1,
                     0,
@@ -59,7 +59,7 @@ public class pedroAuto extends OpMode {
                     true // Robot Centric
             );
         }
-        while ((runtime.seconds() > 4.0 && runtime.seconds() < 5.0)) {
+        if ((runtime.seconds() > 4.0 && runtime.seconds() < 5.0)) {
             follower.setTeleOpDrive(
                     0,
                     0,
@@ -67,17 +67,17 @@ public class pedroAuto extends OpMode {
                     true // Robot Centric
             );
         }
-        while ((runtime.seconds() > 5.0 && runtime.seconds() < 7.0)) {
+        if ((runtime.seconds() > 5.0 && runtime.seconds() < 7.0)) {
             shooter.setVelocity(rpm);
         }
-        while ((runtime.seconds() > 7.0 && runtime.seconds() < 10.0)) {
+        if ((runtime.seconds() > 7.0 && runtime.seconds() < 10.0)) {
             intake.servospin(1);
         }
-        while ((runtime.seconds() > 10.0 && runtime.seconds() < 11.0)) {
+        if ((runtime.seconds() > 10.0 && runtime.seconds() < 11.0)) {
             shooter.setVelocity(0);
             intake.servospin(0);
         }
-        while ((runtime.seconds() > 11.0 && runtime.seconds() < 12.0)) {
+        if ((runtime.seconds() > 11.0 && runtime.seconds() < 12.0)) {
             follower.setTeleOpDrive(
                     1,
                     0,
@@ -85,7 +85,7 @@ public class pedroAuto extends OpMode {
                     true // Robot Centric
             );
         }
-        while ((runtime.seconds() > 12.0 && runtime.seconds() < 13.0)) {
+        if ((runtime.seconds() > 12.0 && runtime.seconds() < 13.0)) {
             follower.setTeleOpDrive(
                     0,
                     0,
