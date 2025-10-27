@@ -31,7 +31,7 @@ public class pedroTeleop extends OpMode {
         follower.update();
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
         shooter = new Shooter(hardwareMap, "leftShooter", "rightShooter", telemetry);
-        intake = new Intake(hardwareMap, "name", "name", telemetry);
+        intake = new Intake(hardwareMap, "lpull", "rpull", telemetry);
     }
 
     @Override
@@ -50,21 +50,25 @@ public class pedroTeleop extends OpMode {
         shooter.periodic();
         intake.periodic();
 
-        if (gamepad2.right_stick_y>.1) {
-            shooter.setVelocity(rpm);
-        } else if (gamepad2.right_stick_y<-.1) {
-            shooter.setVelocity(-rpm);
-        } else {
-            shooter.setVelocity(0);
-        }
-        if (gamepad2.left_stick_y>.1) {
+        if (gamepad2.a) {
+            shooter.setVelocity(-rpm/4);
             intake.servospin(1);
-        } else if (gamepad2.left_stick_y<-.1) {
-            intake.servospin(-1);
         } else {
-            intake.servospin(0);
+            if (gamepad2.right_stick_y > .1) {
+                shooter.setVelocity(rpm);
+            } else if (gamepad2.right_stick_y < -.1) {
+                shooter.setVelocity(-rpm);
+            } else {
+                shooter.setVelocity(0);
+            }
+            if (gamepad2.left_stick_y > .1) {
+                intake.servospin(1);
+            } else if (gamepad2.left_stick_y < -.1) {
+                intake.servospin(-1);
+            } else {
+                intake.servospin(0);
+            }
         }
-
 
 
         if (!slowMode) follower.setTeleOpDrive(

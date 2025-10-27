@@ -26,7 +26,7 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        lpull.set(-lp);
+        lpull.set(lp);
         rpull.set(rp);
     }
 }
