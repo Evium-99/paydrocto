@@ -28,14 +28,11 @@ public class Shooter extends SubsystemBase {
         this.rpmTarget = rpm;
     }
 
-    public double getSetpointVelocity() {
-        return this.rpmTarget;
-    }
 
     @Override
     public void periodic() {
         leftShooter.set(-rpmTarget);
         rightShooter.set(-rpmTarget);
-        telemetry.addData("ShooterCPR", leftShooter.getCorrectedVelocity());
+        telemetry.addData("rpm target", rpmTarget);
     }
 }

@@ -9,20 +9,18 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 //import org.firstinspires.ftc.teamcode.subsystems.Intake;
-import org.firstinspires.ftc.teamcode.subsystems.Shooter;
+//import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 
 @Configurable
 @Autonomous
-public class pedroAuto extends OpMode {
+public class forwarbAuto extends OpMode {
     private Follower follower;
     public static Pose startingPose; //See ExampleAuto to understand how to use this
     private TelemetryManager telemetryM;
-    private Shooter shooter;
+    //    private Shooter shooter;
 //    private Intake intake;
     public static double rpm = 10;
-    private double off = 1;
     private ElapsedTime runtime = new ElapsedTime();
 
     @Override
@@ -31,9 +29,8 @@ public class pedroAuto extends OpMode {
         follower.setStartingPose(startingPose == null ? new Pose() : startingPose);
         follower.update();
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
-        shooter = new Shooter(hardwareMap, "leftShooter", "rightShooter", telemetry);
+//        shooter = new Shooter(hardwareMap, "leftShooter", "rightShooter", telemetry);
 //        intake = new Intake(hardwareMap, "lpull", "rpull", telemetry);
-
     }
 
     @Override
@@ -50,38 +47,19 @@ public class pedroAuto extends OpMode {
         //Call this once per loop
         follower.update();
         telemetryM.update();
-        shooter.periodic();
+//        shooter.periodic();
 //        intake.periodic();
-        if ((runtime.seconds() >= .5-off && runtime.seconds() < 2.5-off)) {
-            shooter.setVelocity(-.75);
+
+
+        if ((runtime.seconds() >= 3.0 && runtime.seconds() < 3.75)) {
             follower.setTeleOpDrive(
-                    .25,
-                    0,
-                    0.0,
-                    true // Robot Centric
-            );
-        }
-        if ((runtime.seconds() >= 2.5-off && runtime.seconds() < 3.5-off)) {
-            follower.setTeleOpDrive(
-                    0,
-                    0,
-                    0,
-                    true // Robot Centric
-            );
-            if ((runtime.seconds() >= 3.2-off && runtime.seconds() < 3.5-off)) {
-                shooter.setVelocity(1);
-            }
-        }
-        if ((runtime.seconds() > 3.5-off && runtime.seconds() < 5.0-off)) {
-            shooter.setVelocity(0);
-            follower.setTeleOpDrive(
-                    0,
                     -.25,
                     0,
+                    0,
                     true // Robot Centric
             );
         }
-        if ((runtime.seconds() > 5.0-off && runtime.seconds() < 5.25-off)) {
+        if ((runtime.seconds() > 3.75 && runtime.seconds() < 5.0)) {
             follower.setTeleOpDrive(
                     0,
                     0,
@@ -91,7 +69,5 @@ public class pedroAuto extends OpMode {
         }
     }
 
-    public void setRuntime(ElapsedTime runtime) {
-        this.runtime = runtime;
-    }
 }
+
